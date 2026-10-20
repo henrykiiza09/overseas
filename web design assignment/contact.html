@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Rides - Contact & About Us</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #0088cc;
+            --primary-dark: #006699;
+            --accent: #ffcc00;
+            --dark: #222222;
+            --light: #f9f9f9;
+            --gray: #666666;
+            --border-radius: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: cornsilk;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background:rgb(115, 226, 230);
+            
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+            background: rgb(113, 109, 114);
+            float: left;
+           
+           
+        }
+        
+
+        nav ul li a {
+            color:#1d1b1b;
+            text-decoration: none;
+            font-weight: normal;
+            transition: all 2s ease;
+            
+            display:block;
+           
+           
+        }
+
+        nav ul li a:hover {
+            color:  #5e0be6;
+            transform: translateY(-2px);
+           
+        }
+         h1 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 50px;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        h1:hover {
+            color: blue;
+        }
+
+
+         /* image */
+        .circular-img {
+  width: 150px;          /* Equal width and height make a perfect square */
+  height: 150px;
+  border-radius: 50%;    /* Turns the square into a circle */
+  object-fit: cover;     /* Crops and scales the image without stretching */
+}
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Hero / Intro Section */
+        .hero {
+            background:  rgb(41, 215, 234);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            color: black;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: black;
+            font-size: 1.1rem;
+        }
+
+        /* Grid Layout for About, Location & Contact */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgb(109, 224, 244);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: black;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* About Section Styles */
+        .about-content p {
+            margin-bottom: 15px;
+            color: black;
+        }
+
+        /* Location Section Styles */
+        .location-info p {
+            margin-bottom: 12px;
+            color: black;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .location-info i {
+            color: black;
+            margin-top: 4px;
+        }
+
+        /* Contact & Accounts Styles */
+        .contact-accounts {
+            grid-column: 1 / -1;
+        }
+
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .account-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            text-decoration: none;
+            color:black;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .account-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 136, 204, 0.2);
+        }
+
+        .account-btn i {
+            font-size: 1.5rem;
+            color:black;
+            transition: color 0.3s ease;
+        }
+
+        .account-btn:hover i {
+            color: white;
+        }
+
+        /* Interactive Element / Notification */
+        .alert-box {
+            background: #e6f4fa;
+            border-left: 5px solid var(--primary);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #000000;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background:  rgb(115, 226, 230);
+            color: rgb(12, 12, 12);
+            text-align: left;
+            padding: 1rem;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        .site-footer {
+    background-color:rgb(115, 226, 230);
+    color: black;
+    padding: 40px 20px 20px;
+    font-family: times new roman;
+}
+
+.footer-team-container {
+    max-width: 1100px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+}
+
+.footer-team-container h3 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: black;
+}
+
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.team-member {
+    background: #2f7ef3;
+    padding: 20px;
+    border-radius: 8px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.team-member img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #00d2ff;
+}
+
+.team-member h4 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+}
+
+.team-member .role {
+    display: block;
+    font-size: 14px;
+    color: #1abc9c;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.team-member p {
+    font-size: 13px;
+    color: black;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.footer-bottom {
+    text-align: left;
+    border-top: 1px solid #34495e;
+    padding-top: 15px;
+    font-size: 14px;
+    color: black;
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo-area">
+            <img src="ttt.png" alt="Logo" class="circular-img"  >
+            <h1>GLOBAL RIDES - Your Ultimate Ride Experience.</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                 <li><a href="tich.html">Bookings</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            
+            <p>Providing seamless, reliable, and comfortable transport and travel services whenever you need them.</p>
+        </section>
+
+        <!-- Grid for About & Location -->
+        <div class="grid-layout">
+            
+            <!-- About Us Card -->
+            <section id="about" class="card">
+                <h3><i class="fa-solid fa-circle-info"></i> About Us</h3>
+                 <img src="ttt.png" alt="Logo" class="circular-img"  >
+                <div class="about-content">
+                    <p>Global Rides is a premier transport and travel company dedicated to transforming how you move. Your journey is our top priority, ensuring safety, punctuality, and maximum comfort on every trip.</p>
+                    <p>Whether you're booking city rides or long-distance travel, our fleet and professional team guarantee world-class service tailored to your absolute satisfaction.</p>
+                </div>
+            </section>
+
+            <!-- Location Card -->
+            <section id="location" class="card">
+                <h3><i class="fa-solid fa-location-dot"></i> Our Location</h3>
+                <div class="location-info">
+                    <p><i class="fa-solid fa-road"></i> <strong>Road:</strong> Along Kabale-Katuna Road</p>
+                    <p><i class="fa-solid fa-street-view"></i> <strong>Street:</strong> Kikoregi Street</p>
+                    <p><i class="fa-solid fa-building"></i> <strong>Building:</strong> Plot 12345, T-Wills Building</p>
+                    <p><i class="fa-solid fa-city"></i> <strong>City:</strong> Kabale, Uganda</p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Contact & Accounts Card -->
+        <section id="contact" class="card contact-accounts">
+            <h3><i class="fa-solid fa-address-book"></i> Inquiries & Contact Accounts</h3>
+            <p style="color: var(--gray); margin-bottom: 20px;">For any inquiries or assistance, reach out directly to the CEO Global Rides or connect with us via our official platforms:</p>
+            
+            <div class="accounts-grid">
+                <!-- Email CEO -->
+                <a href="mailto:arindafaith28@gmail.com" class="account-btn" onclick="showAlert('Opening email client to contact CEO...')">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Email CEO</span>
+                </a>
+
+                <!-- Twitter / X -->
+                <a href="https://x.com/OttoBismark787" target="_blank" class="account-btn" onclick="showAlert('Redirecting to Twitter/X profile...')">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/256757104250" target="_blank" class="account-btn" onclick="showAlert('Redirecting to WhatsApp...')">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+
+                <!-- Phone Support -->
+                <a href="tel:+256701408196" class="account-btn" onclick="showAlert('Initiating phone call to support...')">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span>Call Support</span>
+                </a>
+            </div>
+
+            <!-- Interactive JS Alert Box -->
+            <div id="jsAlert" class="alert-box"></div>
+        </section>
+
+    </div>
+
+    <footer class="site-footer">
+    <div class="footer-team-container">
+        <h3>Our Leadership Team</h3>
+        <div class="team-grid">
+            
+            <!-- CEO -->
+            <div class="team-member">
+                <img src="fffff.png" alt="CEO Name">
+                <h4>ARINDA FAITH</h4>
+                <span class="role">Chief Executive Officer (CEO)</span>
+                <p>Oversees company strategy, major partnerships, and overall vision to ensure world-class travel experiences.</p>
+            </div>
+
+            <!-- Deputy CEO -->
+            <div class="team-member">
+                <img src="ovb.jpeg" alt="Deputy CEO Name">
+                <h4>OTTO BISMARCK</h4>
+                <span class="role">Deputy CEO</span>
+                <p>Manages daily operations, internal logistics, and coordinates inter-departmental transport projects.</p>
+            </div>
+
+            <!-- Manager -->
+            <div class="team-member">
+                <img src="hn.jpeg" alt="Manager Name">
+                <h4>KIIZA IRAGUHA HENRY</h4>
+                <span class="role">Operations Manager</span>
+                <p>Handles customer service inquiries, fleet maintenance schedules, and ground team deployment.</p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+         <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                 <li><a href="about.html">Bookings</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+       <div class="footer-bottom">
+        <p>&copy; 2026 Global Rides. All rights reserved.</p>
+    </div>
+    </footer>
+
+    <!-- Embedded JavaScript -->
+    <script>
+        function showAlert(message) {
+            const alertBox = document.getElementById('jsAlert');
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 4000);
+        }
+
+        // Robust smooth-scroll behavior handler
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking with Global Rides</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Keeps the background image with a dark gradient overlay */
+            background: linear-gradient(cornsilk), 
+                        url('images/bus.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: rgb(100, 91, 228);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background:rgb(115, 226, 230);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container img {
+            height: 55px;
+            width: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00d2ff;
+        }
+
+        .logo-container h1 {
+            font-size: 1.1rem;
+            line-height: 1.3;
+            color: #fff;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+            background: rgb(113, 109, 114);
+            overflow: auto;
+           
+        }
+        
+
+        nav ul li a {
+            color:#1d1b1b;
+            text-decoration: none;
+            font-weight: normal;
+            transition: all 2s ease;
+            
+            display:block;
+            
+            
+        }
+
+        nav ul li a:hover {
+            color:  #5e0be6;
+            transform: translateY(-2px);
+           
+        }
+         h1 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 50px;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        h1:hover {
+            color: blue;
+        }
+
+
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #0d0e10;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Grid for Destinations */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .destination-card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 210, 255, 0.4);
+        }
+
+        .route-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00d2ff;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .badge {
+            background: rgba(0, 210, 255, 0.15);
+            color: #00d2ff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+        }
+
+        .card-details div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .book-btn {
+            background: #00d2ff;
+            color: #0f172a;
+            border: none;
+            padding: 8px 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: #38bdf8;
+        }
+
+        /* Generated Ticket Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .ticket-box {
+            background: #ffffff;
+            color: #1e293b;
+            width: 400px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative;
+            text-align: left;
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ticket-header h3 {
+            color: #0f172a;
+            font-size: 1.3rem;
+        }
+
+        .ticket-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .ticket-body .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+
+        .close-btn {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .print-btn {
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(21, 224, 243, 0.9);
+            text-align: left;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #090909;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="ttt.png" alt="Global Rides Logo">
+            <div>
+                <h1>GLOBAL RIDES</h1>
+                <span style="color: #0d0d0f; font-size: 2rem;">Your Ultimate Ride Experience</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="tich.html">Bookings</a></li>
+                <li><a href="ptm.html">Laguages</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <h2 class="section-title">Tickets and Transactions</h2>
+        <div id="destinations-container" class="destinations-grid"></div>
+    </main>
+
+    <!-- Generated Ticket Popup Modal -->
+    <div id="ticketModal" class="modal-overlay">
+        <div class="ticket-box">
+            <div class="ticket-header">
+                <h3>Global Rides Pass</h3>
+                <span id="ticketMeans" class="badge" style="background:#0284c7; color:#fff;">BUS</span>
+            </div>
+            <div class="ticket-body">
+                <div class="row"><span>Ticket ID:</span> <strong id="ticketId">#GR-94821</strong></div>
+                <div class="row"><span>Route:</span> <strong id="ticketRoute">Kigali - Kampala</strong></div>
+                <div class="row"><span>Departure:</span> <strong id="ticketDeparture">06:00</strong></div>
+                <div class="row"><span>Arrival:</span> <strong id="ticketArrival">18:00</strong></div>
+                <div class="row"><span>Total Cost:</span> <strong id="ticketCost" style="color:#10b981;">$25</strong></div>
+            </div>
+            <div class="ticket-footer">
+                <button class="close-btn" onclick="closeTicketModal()">Close</button>
+                <button class="print-btn" onclick="window.print()">Print Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+         <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="tich.html">Bookings</a></li>
+                <li><a href="ptm.html">Receipts</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav></div>
+        <p>&copy; 2026 Global Rides. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Data & Ticket Generation Logic -->
+    <script>
+        const destinations = [
+            { route: "kigali - kampala", means: "bus", departure: "06:00", arrival: "18:00", cost: "$25" },
+            { route: "kampala - nairobi", means: "train", departure: "06:00", arrival: "16:00", cost: "$30" },
+            { route: "Dodoma - Nairobi", means: "bus", departure: "08:00", arrival: "12:00", cost: "$35" },
+            { route: "Dodoma - Kigali", means: "train", departure: "07:00", arrival: "15:00", cost: "$40" },
+            { route: "Kinshasa - Kampala", means: "plane", departure: "07:00", arrival: "09:00", cost: "$50" },
+            { route: "Kampala - California", means: "plane", departure: "07:00", arrival: "00:00", cost: "$500" },
+            { route: "Kigali - Dubai", means: "plane", departure: "00:00", arrival: "23:00", cost: "$800" }
+        ];
+
+        function renderDestinations() {
+            const container = document.getElementById('destinations-container');
+            container.innerHTML = "";
+
+            destinations.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'destination-card';
+                
+                card.innerHTML = `
+                    <div class="route-header">
+                        <span>${item.route}</span>
+                        <span class="badge">${item.means}</span>
+                    </div>
+                    <div class="card-details">
+                        <div><span>Departure:</span> <strong>${item.departure}</strong></div>
+                        <div><span>Arrival:</span> <strong>${item.arrival}</strong></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="price">${item.cost}</div>
+                        <button class="book-btn" onclick='generateTicket(${JSON.stringify(item)})'>Book & Generate</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Function that pops up the generated ticket from the page data
+        function generateTicket(item) {
+            document.getElementById('ticketRoute').innerText = item.route;
+            document.getElementById('ticketMeans').innerText = item.means.toUpperCase();
+            document.getElementById('ticketDeparture').innerText = item.departure;
+            document.getElementById('ticketArrival').innerText = item.arrival;
+            document.getElementById('ticketCost').innerText = item.cost;
+            document.getElementById('ticketId').innerText = '#GR-' + Math.floor(10000 + Math.random() * 90000);
+            
+            document.getElementById('ticketModal').style.display = 'flex';
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticketModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', renderDestinations);
+    </script>
+</body>
+</html>
